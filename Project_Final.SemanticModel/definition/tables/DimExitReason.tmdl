@@ -1,0 +1,32 @@
+table DimExitReason
+	lineageTag: 5b26370d-6fcc-4f7b-8521-9f14ba41ed51
+
+	column Exit_Reason_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 26f64d8e-e7c6-453d-9518-ed3d195c0886
+		summarizeBy: none
+		sourceColumn: Exit_Reason_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Exit_Reason
+		dataType: string
+		isKey
+		lineageTag: ff67516d-5542-4943-8aa2-ffd9476cb826
+		summarizeBy: none
+		sourceColumn: Exit_Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimExitReason = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_DimExitReason = Source{[Schema="gold",Item="DimExitReason"]}[Data]
+				in
+				    gold_DimExitReason
+
+	annotation PBI_ResultType = Table
+

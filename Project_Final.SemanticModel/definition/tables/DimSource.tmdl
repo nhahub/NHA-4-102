@@ -1,0 +1,32 @@
+table DimSource
+	lineageTag: 0b84e108-cd55-4e02-8c3a-cc784d0fcb30
+
+	column Source_Key
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 03d273ed-47f7-449f-b3af-0b27c711f6f7
+		summarizeBy: none
+		sourceColumn: Source_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sourcing_Channel
+		dataType: string
+		lineageTag: 0b07bb38-4343-44df-b3f2-57412f72d6d0
+		summarizeBy: none
+		sourceColumn: Sourcing_Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSource = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_DimSource = Source{[Schema="gold",Item="DimSource"]}[Data]
+				in
+				    gold_DimSource
+
+	annotation PBI_ResultType = Table
+

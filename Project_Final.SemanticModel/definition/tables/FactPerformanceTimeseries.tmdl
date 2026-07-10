@@ -1,0 +1,97 @@
+table FactPerformanceTimeseries
+	lineageTag: 2dd6be75-f09f-40f5-9d38-bbe3188172bf
+
+	column Performance_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 82334310-668f-4390-a219-9e4967923879
+		summarizeBy: count
+		sourceColumn: Performance_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: f8561482-75fb-4b83-be82-a358cb9c3616
+		summarizeBy: none
+		sourceColumn: Employee_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter_Date_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c2157a1-6ed4-4bab-a4de-fc0fefed0cd9
+		summarizeBy: none
+		sourceColumn: Quarter_Date_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter_Label
+		dataType: string
+		lineageTag: 975eaad9-6f83-463c-8d46-f0859b9ff6fb
+		summarizeBy: none
+		sourceColumn: Quarter_Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 04ca975c-4cda-4fbb-9740-7902c231b01c
+		summarizeBy: sum
+		sourceColumn: Quarter_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tenure_Quarters
+		dataType: int64
+		formatString: 0
+		lineageTag: 57121bcf-b900-4788-91d4-007e6d439b9e
+		summarizeBy: sum
+		sourceColumn: Tenure_Quarters
+
+		annotation SummarizationSetBy = Automatic
+
+	column KPI_Achievement
+		dataType: double
+		lineageTag: b42d3f55-bd7c-4ca2-b11d-fc40fb354cb6
+		summarizeBy: sum
+		sourceColumn: KPI_Achievement
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Quality_of_Work
+		dataType: double
+		lineageTag: 46a5eaf3-890b-4e15-a487-5d3bfb4fcc64
+		summarizeBy: sum
+		sourceColumn: Quality_of_Work
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Skill_Acquisition_Score
+		dataType: double
+		lineageTag: 66fda606-fac4-4971-865b-20e661ec9ed2
+		summarizeBy: sum
+		sourceColumn: Skill_Acquisition_Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactPerformanceTimeseries = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_FactPerformanceTimeseries = Source{[Schema="gold",Item="FactPerformanceTimeseries"]}[Data]
+				in
+				    gold_FactPerformanceTimeseries
+
+	annotation PBI_ResultType = Table
+

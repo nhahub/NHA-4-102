@@ -1,0 +1,135 @@
+table FactLifecycleRetention
+	lineageTag: 9e6ea4b2-45a8-4bf2-b719-8839456923b4
+
+	column Lifecycle_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: fc763131-0b0c-4331-a196-9cca48d46874
+		summarizeBy: count
+		sourceColumn: Lifecycle_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 70bf217b-dcc9-4fe7-8456-f568ffe84379
+		summarizeBy: none
+		sourceColumn: Employee_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hire_Date_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: f568c4fe-b407-4e4a-811a-be3f533a0766
+		summarizeBy: count
+		sourceColumn: Hire_Date_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Termination_Date_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 96a2dc18-5b5d-4466-9ef6-cebde2195ed1
+		summarizeBy: count
+		sourceColumn: Termination_Date_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Promotion_Date_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: bbadeca7-3a9d-4e1b-becb-314c9d346bf0
+		summarizeBy: count
+		sourceColumn: Last_Promotion_Date_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: e938e03c-9170-422f-9862-57eb5e40448d
+		summarizeBy: none
+		sourceColumn: Status_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Exit_Reason_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 75b26e16-563a-42ce-ae8e-f4c75ef6cbc0
+		summarizeBy: none
+		sourceColumn: Exit_Reason_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Tenure_Months
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fb9fce8-aad8-4110-93c0-b5af2bb021c4
+		summarizeBy: sum
+		sourceColumn: Total_Tenure_Months
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comp_vs_Market
+		dataType: double
+		lineageTag: b495e880-fcdd-418e-82f0-efe7f2d840ba
+		summarizeBy: sum
+		sourceColumn: Comp_vs_Market
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Final_Salary
+		dataType: double
+		lineageTag: 5380c978-1be6-49c5-84ab-c35862d02326
+		summarizeBy: sum
+		sourceColumn: Final_Salary
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Avg_KPI_Career
+		dataType: double
+		lineageTag: 11ad5b3b-09c7-4526-abbd-4b1b27c49236
+		summarizeBy: sum
+		sourceColumn: Avg_KPI_Career
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Promotion_Count
+		dataType: int64
+		formatString: 0
+		lineageTag: 56fe1a35-6b90-429e-9c47-453a6e2ad1d3
+		summarizeBy: sum
+		sourceColumn: Promotion_Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attrition_Risk_Score
+		dataType: double
+		lineageTag: c2017e9c-1010-41bf-9764-75aea0a2b2e7
+		summarizeBy: sum
+		sourceColumn: Attrition_Risk_Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactLifecycleRetention = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_FactLifecycleRetention = Source{[Schema="gold",Item="FactLifecycleRetention"]}[Data]
+				in
+				    gold_FactLifecycleRetention
+
+	annotation PBI_ResultType = Table
+

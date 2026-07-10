@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DimEmployee","DimDate","DimExitReason","DimPipelineStatus","DimSource","FactLifecycleRetention","FactMonthlyPulseTimeseries","FactRecruitment","FactPerformanceTimeseries"]
+
+annotation PBI_RemovedChildren = [{"remoteItemId":{"foreignKeyRelationship":{"fromTableLocalLineageTag":"9e6ea4b2-45a8-4bf2-b719-8839456923b4","fromColumnLocalLineageTag":"70bf217b-dcc9-4fe7-8456-f568ffe84379","toTableLocalLineageTag":"35bb3f80-4780-47d6-ab21-8b05a4e80865","toColumnLocalLineageTag":"592c7b1d-25bb-4596-8bb1-a6371e0af3fc"}},"objectType":"Relationship"}]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DimEmployee
+ref table DimDate
+ref table DateTableTemplate_f6b7cbf5-c8b2-49d9-8f65-9d4122253bfa
+ref table LocalDateTable_0c16ad6a-7ca2-4dfd-8b07-0b775a6399c1
+ref table DimExitReason
+ref table DimPipelineStatus
+ref table DimSource
+ref table FactLifecycleRetention
+ref table FactMonthlyPulseTimeseries
+ref table FactRecruitment
+ref table FactPerformanceTimeseries
+ref table _Measures
+
+ref cultureInfo en-US
+

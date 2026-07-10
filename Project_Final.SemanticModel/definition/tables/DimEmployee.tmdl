@@ -1,0 +1,88 @@
+table DimEmployee
+	lineageTag: 35bb3f80-4780-47d6-ab21-8b05a4e80865
+
+	column Employee_Key
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 592c7b1d-25bb-4596-8bb1-a6371e0af3fc
+		summarizeBy: none
+		sourceColumn: Employee_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee_ID
+		dataType: string
+		lineageTag: a6e77247-fe5a-4eaf-8acb-9b45814cb40b
+		summarizeBy: none
+		sourceColumn: Employee_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Candidate_ID
+		dataType: string
+		lineageTag: 83a43edd-ff72-4e95-bd18-d45ff348f29c
+		summarizeBy: none
+		sourceColumn: Candidate_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: aaefb2f3-f424-483c-9bc6-fff09bb5e504
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Role
+		dataType: string
+		lineageTag: d15f50b7-b9e5-4712-915f-08696075c63f
+		summarizeBy: none
+		sourceColumn: Role
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: e570f7fc-82a7-4422-9ae7-5689d0164506
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ethnicity
+		dataType: string
+		lineageTag: e48611bb-3eac-4fe9-a2de-d3d046e9448b
+		summarizeBy: none
+		sourceColumn: Ethnicity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age_Band
+		dataType: string
+		lineageTag: 8c371393-cc73-40e5-a780-9ce6a518850f
+		summarizeBy: none
+		sourceColumn: Age_Band
+
+		annotation SummarizationSetBy = Automatic
+
+	column Education_Level
+		dataType: string
+		lineageTag: e248624b-eb60-4749-92ae-a7978691a332
+		summarizeBy: none
+		sourceColumn: Education_Level
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimEmployee = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_DimEmployee = Source{[Schema="gold",Item="DimEmployee"]}[Data]
+				in
+				    gold_DimEmployee
+
+	annotation PBI_ResultType = Table
+

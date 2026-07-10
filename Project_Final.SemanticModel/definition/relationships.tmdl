@@ -1,0 +1,93 @@
+relationship 72430156-afe9-4288-ba12-a7e84e2495cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Full_Date
+	toColumn: LocalDateTable_0c16ad6a-7ca2-4dfd-8b07-0b775a6399c1.Date
+
+relationship 22c0c94a-443a-446b-80fd-b11e6d80d10b
+	isActive: false
+	fromColumn: FactLifecycleRetention.Hire_Date_Key
+	toColumn: DimDate.Date_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship ca58ce37-98af-4d46-9138-07cae2f7bbd9
+	isActive: false
+	fromColumn: FactLifecycleRetention.Last_Promotion_Date_Key
+	toColumn: DimDate.Date_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 49878976-645d-4a71-a88b-e25e8c158e72
+	isActive: false
+	fromColumn: FactLifecycleRetention.Termination_Date_Key
+	toColumn: DimDate.Date_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 81bdfeb0-22e8-40af-a337-f92618ca432a
+	fromColumn: FactLifecycleRetention.Exit_Reason_Key
+	toColumn: DimExitReason.Exit_Reason_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship bff2f510-7025-4c25-852b-57d51e10ccc3
+	fromColumn: FactLifecycleRetention.Status_Key
+	toColumn: DimPipelineStatus.Status_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 921163c8-6860-4ed4-8e14-442c9008b92a
+	fromColumn: FactMonthlyPulseTimeseries.Employee_Key
+	toColumn: DimEmployee.Employee_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 69d9b162-7fbf-419e-9230-b3bcbf1c2826
+	fromColumn: FactMonthlyPulseTimeseries.Pulse_Date_Key
+	toColumn: DimDate.Date_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship b36d73dc-1181-4ebe-97c0-f77010673703
+	fromColumn: FactRecruitment.Employee_Key
+	toColumn: DimEmployee.Employee_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 86f70831-7474-4ce0-b8b3-47ce0a930b3a
+	fromColumn: FactRecruitment.Date_Key
+	toColumn: DimDate.Date_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 35958fb8-fd97-49fe-8c3f-40438b870aab
+	isActive: false
+	fromColumn: FactRecruitment.Status_Key
+	toColumn: DimPipelineStatus.Status_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship e34c0a84-840b-46e1-ac00-ade829ee365d
+	fromColumn: FactRecruitment.Source_Key
+	toColumn: DimSource.Source_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 05a88483-6420-4b12-bab7-cacdc0b14849
+	fromColumn: FactPerformanceTimeseries.Employee_Key
+	toColumn: DimEmployee.Employee_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship d90e63d6-03f6-4dbb-9672-75c09454f658
+	fromColumn: FactPerformanceTimeseries.Quarter_Date_Key
+	toColumn: DimDate.Date_Key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 1f19693e-cf19-60c9-5506-997411643a2f
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DimEmployee.Employee_Key
+	toColumn: FactLifecycleRetention.Employee_Key
+

@@ -1,0 +1,180 @@
+table _Measures
+	lineageTag: a5494e87-5046-4612-ae1e-9a13a2d4730b
+
+	measure 'Avg Days to Fill' = ```
+			
+			    AVERAGE(FactRecruitment[Days_to_Fill])
+			```
+		formatString: 0.00
+		lineageTag: e1aeba98-8f86-4e33-96d6-5ade0862644b
+
+	measure 'Avg Acquisition Cost' = ```
+			
+			    AVERAGE(FactRecruitment[Total_Acquisition_Cost])
+			
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 550259d9-f4f8-4c39-97fc-b9f44c5d44d7
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Hire Rate' = ```
+			
+			VAR HiredKey =
+			    CALCULATE(
+			        MAX(DimPipelineStatus[Status_Key]),
+			        DimPipelineStatus[Status_Name] = "Hired"
+			    )
+			RETURN
+			DIVIDE(
+			    COUNTROWS(FILTER(FactRecruitment, FactRecruitment[Status_Key] = HiredKey)),
+			    COUNTROWS(FactRecruitment)
+			) 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 090a61fa-3a77-45e6-b7e1-7f77bc852526
+
+	measure 'Avg LQI Hired' = ```
+			
+			    VAR HiredKey =
+			        CALCULATE(
+			            MAX(DimPipelineStatus[Status_Key]),
+			            DimPipelineStatus[Status_Name] = "Hired"
+			        )
+			    RETURN
+			    CALCULATE(
+			        AVERAGE(FactRecruitment[LQI]),
+			        FactRecruitment[Status_Key] = HiredKey
+			    )
+			```
+		formatString: 0.00
+		lineageTag: 9d503f99-73d3-4582-b380-62184d1c6a9e
+
+	measure 'Avg KPI Achievement' = ```
+			
+			    AVERAGE(FactPerformanceTimeseries[KPI_Achievement])
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7b1adef7-707f-474a-abf4-043b7487c570
+
+	measure 'Avg Quality of Work' = ```
+			
+			    AVERAGE(FactPerformanceTimeseries[Quality_of_Work])
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 70b98ede-ea9f-4bf8-a7bd-6240f23c6f72
+
+	measure 'Avg Skill Acquisition' = ```
+			
+			    AVERAGE(FactPerformanceTimeseries[Skill_Acquisition_Score])
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 84436714-cfee-464c-bfba-f3fff71e3b80
+
+	measure 'Top Performing Department' =
+			
+			MAXX(
+			    TOPN(1,
+			        SUMMARIZE(DimEmployee, DimEmployee[Department],
+			        "AvgKPI", AVERAGE(FactPerformanceTimeseries[KPI_Achievement])),
+			        [AvgKPI], DESC
+			    ),
+			    DimEmployee[Department]
+			)
+		lineageTag: 038f8125-7e8f-4cd8-b11b-f7a94d39c134
+
+	measure 'Attrition Rate' = ```
+			
+			    DIVIDE(
+			        COUNTROWS(FILTER(FactLifecycleRetention, 
+			            RELATED(DimPipelineStatus[Status_Name]) = "Terminated")),
+			        COUNTROWS(FactLifecycleRetention)
+			    ) 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f48cffd4-c94d-4c49-a6ba-0f90a2180302
+
+	measure 'Avg Tenure Months' = ```
+			
+			    AVERAGE(FactLifecycleRetention[Total_Tenure_Months])
+			```
+		formatString: 0.00
+		lineageTag: 494652e9-bf45-46a8-9f92-2ef3272ce78a
+
+	measure 'Avg Attrition Risk' = ```
+			
+			    AVERAGE(FactLifecycleRetention[Attrition_Risk_Score])
+			
+			```
+		formatString: 0.00
+		lineageTag: d84510b7-c6f3-4c92-9439-bb7ecf419b3f
+
+	measure 'Avg Comp vs Market' = ```
+			
+			    AVERAGE(FactLifecycleRetention[Comp_vs_Market])
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 630c1374-b8a5-4e59-b5c1-a23642ec7343
+
+	measure 'Avg Pulse Score' = ```
+			
+			    AVERAGE(FactMonthlyPulseTimeseries[Monthly_Pulse_Score])
+			
+			```
+		formatString: 0.00
+		lineageTag: aaac24a2-10e5-4a2d-933d-9cea44fb4784
+
+	measure 'High Culture Band %' = ```
+			
+			    DIVIDE(
+			        COUNTROWS(FILTER(FactMonthlyPulseTimeseries, 
+			            FactMonthlyPulseTimeseries[Culture_Band] = "High")),
+			        COUNTROWS(FactMonthlyPulseTimeseries)
+			    ) 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3da57428-63e2-4b3e-b660-4cf60338cc9d
+
+	measure 'Lowest Pulse Month' = ```
+			
+			    MINX(
+			        SUMMARIZE(FactMonthlyPulseTimeseries,
+			            FactMonthlyPulseTimeseries[Year_Month],
+			            "AvgPulse", AVERAGE(FactMonthlyPulseTimeseries[Monthly_Pulse_Score])),
+			        [AvgPulse]
+			    )
+			```
+		lineageTag: 2d01feae-1161-486e-bd6d-75429b7f507f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Pulse by Department' = ```
+			
+			    CALCULATE(
+			        AVERAGE(FactMonthlyPulseTimeseries[Monthly_Pulse_Score]),
+			        ALLEXCEPT(DimEmployee, DimEmployee[Department])
+			    )
+			```
+		formatString: 0.00
+		lineageTag: f4c8e045-f033-43e2-b947-ed40f63aa19b
+
+	column Column
+		formatString: 0
+		lineageTag: 004f08b4-a91e-42fb-b24d-55481458b14e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 61ae644cf3314361955a00fbc16496c1
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

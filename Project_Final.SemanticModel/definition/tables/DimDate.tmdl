@@ -1,0 +1,84 @@
+table DimDate
+	lineageTag: 59dfc82c-295c-4b13-9e0b-daa74afed1e9
+
+	column Date_Key
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 6d74bb25-35de-456e-b8c3-af21f9e2e732
+		summarizeBy: none
+		sourceColumn: Date_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Full_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6b24b2a8-d7ca-4a3a-9c28-5b04bef1b0a6
+		summarizeBy: none
+		sourceColumn: Full_Date
+
+		variation Variation
+			isDefault
+			relationship: 72430156-afe9-4288-ba12-a7e84e2495cd
+			defaultHierarchy: LocalDateTable_0c16ad6a-7ca2-4dfd-8b07-0b775a6399c1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Day_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 22b855c4-c951-485b-a0ae-b749a420e90b
+		summarizeBy: sum
+		sourceColumn: Day_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 84214ade-2a89-47d4-bff0-238592b64b17
+		summarizeBy: sum
+		sourceColumn: Month_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Name
+		dataType: string
+		lineageTag: abb7f140-8fc7-4a79-8bf8-6d91cd906e17
+		summarizeBy: none
+		sourceColumn: Month_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c31757d-5085-490b-b9ff-5029d49cb501
+		summarizeBy: sum
+		sourceColumn: Quarter_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 4175ea58-381c-4199-ab80-62da6705ae28
+		summarizeBy: sum
+		sourceColumn: Year_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_DimDate = Source{[Schema="gold",Item="DimDate"]}[Data]
+				in
+				    gold_DimDate
+
+	annotation PBI_ResultType = Table
+

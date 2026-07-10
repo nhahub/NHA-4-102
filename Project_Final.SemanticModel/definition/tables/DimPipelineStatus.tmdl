@@ -1,0 +1,40 @@
+table DimPipelineStatus
+	lineageTag: fd4fcc6e-7323-4dad-9b9f-3511e3e8b0a4
+
+	column Status_Key
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: fd351d4d-ecfb-413b-8473-85b9f1eac0b0
+		summarizeBy: none
+		sourceColumn: Status_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Name
+		dataType: string
+		lineageTag: 06af0082-69f7-4e30-ae7b-fb4dfe9cbf32
+		summarizeBy: none
+		sourceColumn: Status_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Type
+		dataType: string
+		lineageTag: 971864aa-bf5b-4c1b-a6c9-f8f1249b14c3
+		summarizeBy: none
+		sourceColumn: Status_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimPipelineStatus = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_DimPipelineStatus = Source{[Schema="gold",Item="DimPipelineStatus"]}[Data]
+				in
+				    gold_DimPipelineStatus
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,76 @@
+table FactMonthlyPulseTimeseries
+	lineageTag: c5835585-6832-46e2-9646-b6ffc3e863bb
+
+	column Pulse_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: f260e2dd-a671-47fb-a39d-f63c3de6ffbb
+		summarizeBy: count
+		sourceColumn: Pulse_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 39d03f22-ce1a-4b78-bcc3-5ab0cc9b3bfe
+		summarizeBy: none
+		sourceColumn: Employee_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pulse_Date_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: 7cbc993f-42a5-475e-9be0-bfa11466259e
+		summarizeBy: none
+		sourceColumn: Pulse_Date_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 15638863-d3a2-4f31-9524-26b9a88e1ed6
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Number
+		dataType: int64
+		formatString: 0
+		lineageTag: 86ced80d-9566-4442-83c3-8ffbfb6374ec
+		summarizeBy: sum
+		sourceColumn: Month_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Monthly_Pulse_Score
+		dataType: double
+		lineageTag: b9e62b74-3a7e-40d7-af5e-a82321e3606a
+		summarizeBy: sum
+		sourceColumn: Monthly_Pulse_Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Culture_Band
+		dataType: string
+		lineageTag: 2fbf199a-57c1-4095-a656-9935246a6abb
+		summarizeBy: none
+		sourceColumn: Culture_Band
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactMonthlyPulseTimeseries = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("LAPTOP-EJG4DA3V\SQLEXPRESS", "Project"),
+				    gold_FactMonthlyPulseTimeseries = Source{[Schema="gold",Item="FactMonthlyPulseTimeseries"]}[Data]
+				in
+				    gold_FactMonthlyPulseTimeseries
+
+	annotation PBI_ResultType = Table
+
